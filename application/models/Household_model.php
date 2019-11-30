@@ -51,7 +51,7 @@ class Household_model extends CI_Model
         $searchQuery = "";
         if($searchValue != ''){
             $searchQuery = " (householdNum like '%".$searchValue."%' or 
-                    purokID like '%".$searchValue."%' ) ";
+                    purok_id like '%".$searchValue."%' ) ";
         }
 
         ## Total number of records without filtering
@@ -80,7 +80,7 @@ class Household_model extends CI_Model
          
             $data[] = array(
                 $r->householdNum,
-                $r->purokID,
+                $r->purok_id,
                 $r->totalhouseholdmember,
                 '<div class="table-data-feature"><button class="item item_edit" data-toggle="tooltip" title="Edit" data-id="'.$r->id.'" data-householdNum="'.$r->householdNum.'"><i class="zmdi zmdi-edit"></i></button>&nbsp;&nbsp;<button class="item item_delete" data-toggle="tooltip" title="Delete" data-id="'.$r->id.'"><i class="zmdi zmdi-delete"></i></button></div>',
             );

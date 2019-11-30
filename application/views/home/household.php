@@ -297,6 +297,9 @@
             'ajax' : {
                 url : "<?= site_url("household/show")?>",
             },
+            "order"      : [
+                [1,"asc"]
+            ],
             "columns"    : [
                 null,
                 null,
