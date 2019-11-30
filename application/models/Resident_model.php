@@ -24,4 +24,27 @@ class Resident_model extends CI_Model
         $this->db->where($cond);
         $this->db->delete('tbl_resident');
     }
+
+    function fetch_data($query)
+    {
+        $this->db->like('householdNum', $query);
+        $query = $this->db->get('tbl_household');
+        if($query->num_rows() > 0)
+        {
+            foreach($query->result_array() as $row)
+            {
+                $output[] = array(
+                    'name'  => $row["householdNum"]
+                );
+           }
+           echo json_encode($output);
+        }
+        else{
+            $output[] = array(
+                    'name'  => 'NO HOUSEHOLD FOUND'
+        );
+        echo json_encode($output);
+        }
+        
+    }
 }

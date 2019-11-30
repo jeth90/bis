@@ -34,7 +34,7 @@ class Resident extends CI_Controller
             'lastName'      => $this->input->post('lastName'),
             'qualifier'     => $this->input->post('qualifier'),
             'addressNumber' => $this->input->post('addressNumber'),
-            'addressStreet' => $this->input->post('street'),
+            // 'addressStreet' => $this->input->post('street'),
             'addressSubd'   => $this->input->post('addressSubd'),
             'birthPlace'    => $this->input->post('birthPlace'),
             'birthdate'     => $this->input->post('birthdate'),
@@ -83,4 +83,8 @@ class Resident extends CI_Controller
           echo json_encode($output);
           exit();
     }
+    function fetch()
+	{
+	  echo $this->resident_model->fetch_data($this->uri->segment(3));
+	}
 }

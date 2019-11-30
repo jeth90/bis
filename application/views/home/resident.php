@@ -112,9 +112,9 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group col-lg-6">
+                                    <div class="form-group col-lg-6" id="prefetch">
                                         <label for="company" class=" form-control-label">Household No.</label>
-                                        <input type="text" id="householdNo" placeholder="Enter Household Number" class="form-control" maxlength="8" />
+                                        <input type="text" id="householdNo" placeholder="Enter Household Number" class="form-control typeahead col-lg-12" maxlength="8" />
                                     </div>
                                 </div>
                                 <div class="form-group" style="border-top:1px solid gray"></div>
@@ -150,15 +150,15 @@
 
                                 <div class="form-group" style="border-top:1px solid gray"></div>
                                 <div class="row form-group">
-                                    <div class="col col-lg-4">
+                                    <div class="col col-lg-6">
                                         <label for="addressNumber" class=" form-control-label">ADDRESS Number</label>
                                         <input type="text" id="addressNumber" placeholder="Enter Address Number" class="form-control">
                                     </div>
-                                    <div class="col col-lg-4">
+                                    <!-- <div class="col col-lg-4">
                                         <label for="street" class=" form-control-label">Street</label>
                                         <input type="text" id="street" placeholder="Enter street name" class="form-control">
-                                    </div>
-                                    <div class="col col-lg-4">
+                                    </div> -->
+                                    <div class="col col-lg-6">
                                         <label for="subdivision" class=" form-control-label">Subdivision</label>
                                         <input type="text" id="addressSubd" placeholder="Enter Subdivision" class="form-control">
                                     </div>
@@ -259,12 +259,124 @@
         $('#birthdate').datetimepicker({
             format: 'DD.MM.YYYY'
         });
-        $('#datatable').DataTable({
+        var datatable = $('#datatable').DataTable({
             "pageLength" : 5,
             "ajax":{
                 url : "<?= site_url("resident/list_resident") ?>",
                 type: 'GET'
             },
+        });
+
+        // typeahead
+        var sample_data = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch:'<?php echo base_url(); ?>resident/fetch',
+            remote:{
+                url:'<?php echo base_url(); ?>resident/fetch/%QUERY',
+                wildcard:'%QUERY'
+            }
+        });
+          
+        $('#prefetch .typeahead').typeahead(null, {
+            name: 'sample_data',
+            display: 'name',
+            source:sample_data,
+            limit:10,
+            templates:{
+                suggestion:Handlebars.compile('<div class="col-md-12" style="padding-right:5px; padding-left:5px; " >{{name}}</div></div>')
+            }
+        });
+
+        // ----------
+        $("#saveResident").click(function(){
+
+            var purok = $('#purok').val();
+            var householdNo = $('#householdNo').val();
+            var firstName = $('#firstName').val();
+            var lastName = $('#lastName').val();
+            var middleName = $('#middleName').val();
+            var qualifier = $('#qualifier').val();
+            var addressNumber = $('#addressNumber').val();
+            // var street = $('#street').val();
+            var addressSubd = $('#addressSubd').val();
+            var birthPlace = $('#birthPlace').val();
+            var birthdate = $("#birthdate").data('date');
+            var gender = $('input[name=gender]:checked').val();
+            var status = $('#status').val();
+            var citizen = $('#citizen').val();
+            var job = $('#job').val();
+            var remarks =$('#remarks').val();
+
+            console.log("purok id: "+purok);
+            console.log("household: "+householdNo);
+            
+            
+
+            validate_household(purok,householdNo).done(function(data){
+                if (data.status) {
+                    if (purok == 0) 
+                    {
+                        swal({
+                            title: 'Submission Failed',
+                            text: 'Please select Purok!', 
+                            type: 'warning',
+                        });
+                        
+                    }
+                    else
+                    {
+                        $.ajax({
+                            url:    '<?=base_url()?>resident/add_resident',
+                            method: 'POST',
+                            data: {
+                                purok:purok,
+                                householdNo:householdNo,
+                                firstName:firstName,
+                                lastName:lastName,
+                                middleName:middleName,
+                                qualifier:qualifier,
+                                addressNumber:addressNumber,
+                                // street:street,
+                                addressSubd:addressSubd,
+                                birthPlace:birthPlace,
+                                birthdate:birthdate,
+                                gender:gender,
+                                status:status,
+                                citizen:citizen,
+                                job:job,
+                                remarks:remarks
+                            },
+                            dataType : 'json',
+                            success:function(response){
+                                if (response.status) {
+                                    
+                                    swal({
+                                        title: 'Success',
+                                        text: 'Resident Added Successfully!', 
+                                        type: 'success',
+                                        timer: 1000,
+                                        showConfirmButton: false,
+                                    });
+
+                                    // $('form[name="household_form"]')[0].reset();
+                                    // $('#add_resident').modal('hide');
+                                    datatable.ajax.reload();                                
+                                }
+                            },
+                            error:function(e){
+                                alert(e);
+                            }
+                        });
+                    }
+                }else{
+                    swal({
+                        title: 'Submission Failed',
+                        text: 'Household Not Exist! Please Register Household first!', 
+                        type: 'warning',
+                    });
+                }
+            });
         });
     });
 
@@ -299,67 +411,22 @@
             }
         });
     }
-    $("#saveResident").click(function(){
-        var purok = $('#purok').val();
-        var householdNo = $('#householdNo').val();
-        var firstName = $('#firstName').val();
-        var lastName = $('#lastName').val();
-        var middleName = $('#middleName').val();
-        var qualifier = $('#qualifier').val();
-        var addressNumber = $('#addressNumber').val();
-        var street = $('#street').val();
-        var addressSubd = $('#addressSubd').val();
-        var birthPlace = $('#birthPlace').val();
-        var birthdate = $("#birthdate").data('date');
-        var gender = $('input[name=gender]:checked').val();
-        var status = $('#status').val();
-        var citizen = $('#citizen').val();
-        var job = $('#job').val();
-        var remarks =$('#remarks').val();
-
-        if (purok == 0) 
-        {
-            alert("please select Purok");
-        }
-        else
-        {
-            $.ajax({
-                url:    '<?=base_url()?>resident/add_resident',
-                method: 'POST',
-                data: {
-                    purok:purok,
-                    householdNo:householdNo,
-                    firstName:firstName,
-                    lastName:lastName,
-                    middleName:middleName,
-                    qualifier:qualifier,
-                    addressNumber:addressNumber,
-                    street:street,
-                    addressSubd:addressSubd,
-                    birthPlace:birthPlace,
-                    birthdate:birthdate,
-                    gender:gender,
-                    status:status,
-                    citizen:citizen,
-                    job:job,
-                    remarks:remarks
-                },
-                dataType : 'json',
-                success:function(response){
-                    if (response.status) {
-                        alert("successfully added.");
-
-                        // $('form[name="household_form"]')[0].reset();
-                        // $('#add_resident').modal('hide');
-                        
-                    }
-                },
-                error:function(e){
-                    alert(e);
-                }
-            });
-        }
-        
-    });
+    function validate_household(purok, household){
+        return  $.ajax({
+            type: 'ajax',            
+            url : '<?= base_url()?>household/search_household/',
+            method: 'POST',
+            data: {purok:purok, household:household},
+            async: true,
+            dataType: 'json',
+            success: function(data){
+                console.log(data.status);
+            },
+            error:function(e){
+                alert(e);
+            }
+        });
+    }
+    
        
 </script>
