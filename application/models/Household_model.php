@@ -51,19 +51,23 @@ class Household_model extends CI_Model
         $searchQuery = "";
         if($searchValue != ''){
             $searchQuery = " (householdNum like '%".$searchValue."%' or 
-                    purok_id like '%".$searchValue."%' ) ";
+                    purok like '%".$searchValue."%' ) ";
         }
 
         ## Total number of records without filtering
         $this->db->select('count(*) as allcount');
-        $records = $this->db->get('tbl_household')->result();
+        $this->db->from('tbl_household');
+        $this->db->join('tbl_purok','tbl_purok.id=tbl_household.purok_id','inner');
+        $records = $this->db->get()->result();
         $totalRecords = $records[0]->allcount;
 
         ## Total number of record with filtering
         $this->db->select('count(*) as allcount');
         if($searchQuery != '')
         $this->db->where($searchQuery);
-        $records = $this->db->get('tbl_household')->result();
+        $this->db->from('tbl_household');
+        $this->db->join('tbl_purok','tbl_purok.id=tbl_household.purok_id','inner');
+        $records = $this->db->get()->result();
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
@@ -72,7 +76,9 @@ class Household_model extends CI_Model
         $this->db->where($searchQuery);
         $this->db->order_by($columnName, $columnSortOrder);
         $this->db->limit($rowperpage, $start);
-        $records = $this->db->get('tbl_household')->result();
+        $this->db->from('tbl_household');
+        $this->db->join('tbl_purok','tbl_purok.id=tbl_household.purok_id','inner');
+        $records = $this->db->get()->result();
 
         $data = array();
 
@@ -80,7 +86,7 @@ class Household_model extends CI_Model
          
             $data[] = array(
                 $r->householdNum,
-                $r->purok_id,
+                $r->purok,
                 $r->totalhouseholdmember,
                 '<div class="table-data-feature"><button class="item item_edit" data-toggle="tooltip" title="Edit" data-id="'.$r->id.'" data-householdNum="'.$r->householdNum.'"><i class="zmdi zmdi-edit"></i></button>&nbsp;&nbsp;<button class="item item_delete" data-toggle="tooltip" title="Delete" data-id="'.$r->id.'"><i class="zmdi zmdi-delete"></i></button></div>',
             );

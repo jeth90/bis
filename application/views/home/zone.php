@@ -158,18 +158,18 @@
     }
     function filter_purok(search){
         return  $.ajax({
-                type: 'ajax',
-                url : '<?= base_url()?>zone/search_purok/'+search,
-                async: true,
-                dataType: 'json',
-                success: function(data){
-                    console.log(data.status);
-                },
-                error:function(e){
-                    alert(e);
-                }
-            });
-        }
+            type: 'ajax',
+            url : '<?= base_url()?>zone/search_purok/'+search,
+            async: true,
+            dataType: 'json',
+            success: function(data){
+                console.log(data.status);
+            },
+            error:function(e){
+                alert(e);
+            }
+        });
+    }
     
     $(document).ready(function(){
         

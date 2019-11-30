@@ -219,41 +219,7 @@
 <!-- end modal -->
 <script type="text/javascript">
     // list_household();
-    $('#save').click(function() {
-        var purok           = $('#purok').val();
-        var household    = $('#household').val();
-
-        if ( purok == 0 ){
-            alert("Please Select Purok.");
-        }
-        else if(household =="")
-        {
-            alert("Please Input Household Number!");
-        }
-        else{
-            $.ajax({
-                url:    '<?=base_url()?>household/add_household',
-                method: 'POST',
-                data: {
-                    purok:purok,
-                    household:household
-                },
-                dataType : 'json',
-                success:function(response){
-                    if (response.status) {
-                        alert("successfully added.");
-
-                        $('form[name="household_form"]')[0].reset();
-                        $('#add_household').modal('hide');
-                        list_household();
-                    }
-                },
-                error:function(e){
-                    alert(e);
-                }
-            });
-        }
-    });
+    
     function list_household()
     {
         $.ajax({
@@ -288,7 +254,7 @@
         });
     }
     $(document).ready(function(){
-        $('#datatables').DataTable({
+        var table = $('#datatables').DataTable({
             'pageLength' : 10,
             'processing': true,
             'order' :[],
@@ -306,6 +272,48 @@
                 null,
                 { orderable: false },
             ],
+        });
+
+        $('#save').click(function() {
+            var purok           = $('#purok').val();
+            var household    = $('#household').val();
+
+            if ( purok == 0 ){
+                alert("Please Select Purok.");
+            }
+            else if(household =="")
+            {
+                alert("Please Input Household Number!");
+            }
+            else{
+                $.ajax({
+                    url:    '<?=base_url()?>household/add_household',
+                    method: 'POST',
+                    data: {
+                        purok:purok,
+                        household:household
+                    },
+                    dataType : 'json',
+                    success:function(response){
+                        if (response.status) {
+                            swal({
+                                title: 'Success',
+                                text: 'Purok Added Successfully!', 
+                                type: 'success',
+                                timer: 1000,
+                                showConfirmButton: false,
+                            });
+
+                            $('form[name="household_form"]')[0].reset();
+                            $('#add_household').modal('hide');
+                            table.ajax.reload();                        
+                        }
+                    },
+                    error:function(e){
+                        alert(e);
+                    }
+                });
+            }
         });
     });
 </script>
