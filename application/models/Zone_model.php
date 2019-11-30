@@ -112,6 +112,12 @@ class Zone_model extends CI_Model
         $sql = "UPDATE tbl_purok SET totalhousehold=totalhousehold+1 WHERE id=$id";
         $this->db->query($sql);
     }
+    public function totalhousehold_decrease($id)
+    {
+        
+        $sql = "UPDATE tbl_purok SET totalhousehold=totalhousehold-1 WHERE id=$id";
+        $this->db->query($sql);
+    }
     public function edit_purok($data, $id)
     {
         $this->db->where('id', $id);

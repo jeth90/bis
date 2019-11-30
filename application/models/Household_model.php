@@ -56,8 +56,8 @@ class Household_model extends CI_Model
 
         ## Total number of records without filtering
         $this->db->select('count(*) as allcount');
-        $this->db->from('tbl_household');
-        $this->db->join('tbl_purok','tbl_purok.id=tbl_household.purok_id','inner');
+        $this->db->from('tbl_purok');
+        $this->db->join('tbl_household','tbl_purok.id=tbl_household.purok_id','inner');
         $records = $this->db->get()->result();
         $totalRecords = $records[0]->allcount;
 
@@ -65,8 +65,8 @@ class Household_model extends CI_Model
         $this->db->select('count(*) as allcount');
         if($searchQuery != '')
         $this->db->where($searchQuery);
-        $this->db->from('tbl_household');
-        $this->db->join('tbl_purok','tbl_purok.id=tbl_household.purok_id','inner');
+        $this->db->from('tbl_purok');
+        $this->db->join('tbl_household','tbl_purok.id=tbl_household.purok_id','inner');
         $records = $this->db->get()->result();
         $totalRecordwithFilter = $records[0]->allcount;
 
@@ -76,8 +76,8 @@ class Household_model extends CI_Model
         $this->db->where($searchQuery);
         $this->db->order_by($columnName, $columnSortOrder);
         $this->db->limit($rowperpage, $start);
-        $this->db->from('tbl_household');
-        $this->db->join('tbl_purok','tbl_purok.id=tbl_household.purok_id','inner');
+        $this->db->from('tbl_purok');
+        $this->db->join('tbl_household','tbl_purok.id=tbl_household.purok_id','inner');
         $records = $this->db->get()->result();
 
         $data = array();
@@ -88,7 +88,7 @@ class Household_model extends CI_Model
                 $r->householdNum,
                 $r->purok,
                 $r->totalhouseholdmember,
-                '<div class="table-data-feature"><button class="item item_edit" data-toggle="tooltip" title="Edit" data-id="'.$r->id.'" data-householdNum="'.$r->householdNum.'"><i class="zmdi zmdi-edit"></i></button>&nbsp;&nbsp;<button class="item item_delete" data-toggle="tooltip" title="Delete" data-id="'.$r->id.'"><i class="zmdi zmdi-delete"></i></button></div>',
+                '<div class="table-data-feature"><button class="item item_edit" data-toggle="tooltip" title="Edit" data-id="'.$r->id.'"  data-purok="'.$r->purok.'" data-purok_id="'.$r->purok_id.'" data-asd="'.$r->householdNum.'"><i class="zmdi zmdi-edit"></i></button>&nbsp;&nbsp;<button class="item item_delete" data-toggle="tooltip" title="Delete" data-id="'.$r->id.'" data-purok_id="'.$r->purok_id.'" data-asd="'.$r->householdNum.'"><i class="zmdi zmdi-delete"></i></button></div>',
             );
         }
 
@@ -105,33 +105,12 @@ class Household_model extends CI_Model
     }
     public function search_household($purok_id,$household)
     {   
-        // $this->db->where('id',$purok_id);
-        // $purok = $this->db->get('tbl_purok');
-        
-        // var_dump($purok['purok']);
-
-        // $sql = "SELECT 
-        //     a.id,
-        //     a.householdNum,
-        //     a.purok_id,
-        //     a.totalhouseholdmember,
-        //     b.id,
-        //     b.purok FROM tbl_household a 
-        //     INNER JOIN tbl_purok b ON a.purok_id = b.id
-        //     WHERE a.householdNum=$household AND b.id=$purok_id";
-
-        //     $query = $this->db->query($sql);
-        
-        // return $query->result_array();
-
         $cond = array('tbl_purok.id'=> $purok_id, 'householdNum'=>$household);
         $this->db->where($cond);
         $this->db->from('tbl_household');
         $this->db->join('tbl_purok','tbl_purok.id=tbl_household.purok_id','inner');
         $query = $this->db->get();
 
-        // echo("<pre>");
-        // var_dump($query);
         if ($query->num_rows() > 0) {
             return true;
         }
@@ -139,5 +118,19 @@ class Household_model extends CI_Model
             return false;
         }
        
+    }
+    public function update_household($data, $id)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('tbl_household', $data);
+
+        return true;
+    }
+    public function drop_household($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('tbl_household');
+
+        return 1;
     }
 }

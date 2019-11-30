@@ -183,7 +183,7 @@
                 url : "<?= site_url("zone/purok_list")?>",          
             },
             "order"      : [
-                [1,"asc"]
+                [2,"asc"]
             ],
             "columns"    : [
                 null,
@@ -267,15 +267,15 @@
             var purok = $('#edit_purok').val();
             var purok_leader = $('#edit_purok_leader').val();
 
-            filter_purok(purok).done(function(data){
-                if (data.status) {
-                   swal({
-                        title: 'Submission Failed',
-                        text: 'Purok Name already Exist!', 
-                        type: 'warning',
-                    });
-                }
-                else{
+            // filter_purok(purok).done(function(data){
+            //     if (data.status) {
+            //        swal({
+            //             title: 'Submission Failed',
+            //             text: 'Purok Name already Exist!', 
+            //             type: 'warning',
+            //         });
+            //     }
+            //     else{
                     if ((purok=='') || purok_leader=='') {
                         swal({
                         title: 'Submission Failed',
@@ -314,8 +314,8 @@
                             }
                         });
                     }
-                }
-            })
+            //     }
+            // })
             
         });
         $("#list_purok").on('click', '.item_delete', function(){

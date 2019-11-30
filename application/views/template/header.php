@@ -51,6 +51,10 @@
     <script src="<?= base_url()?>assets/sweetalert2/sweetalert2.js"></script>
     <script src="<?= base_url()?>assets/sweetalert2/sweetalert2.min.js"></script>
     
+    <link rel="stylesheet" href="<?= base_url() ?>assets/typeahead/examples.css" /> 
+    <script src="<?= base_url() ?>assets/typeahead/bootstrap3-typeahead.min.js"></script>
+    <script src="<?= base_url() ?>assets/typeahead/handlebars.js"></script>
+    <script src="<?= base_url() ?>assets/typeahead/typeahead.bundle.js"></script>
 
 </head>
 

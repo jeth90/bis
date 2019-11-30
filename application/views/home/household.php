@@ -2,7 +2,13 @@
     <div class="section__content section__content--p30">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="overview-wrap">
+                        <h3 class="title-3 m-b-30">
+                            <i class="zmdi zmdi-account-calendar"></i>Households</h3>
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="overview-wrap">
                         <h2 class="title-1"></h2>
                         <button class="au-btn au-btn-icon au-btn--blue" data-toggle="modal" data-target="#add_household">
@@ -14,11 +20,10 @@
             <!-- DATA TABLE-->           
             <div class="row">
                 <div class="col-md-12">
+                    
                     <!-- USER DATA-->
                     <div class="user-data m-b-30">
-                        <h3 class="title-3 m-b-30">
-                            <i class="zmdi zmdi-account-calendar"></i>Households</h3>
-                        <div class="filters m-b-45">
+                        <!-- <div class="filters m-b-45">
                             <div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border">
                                 <select class="js-select2" name="property">
                                     <option selected="selected">All</option>
@@ -27,8 +32,7 @@
                                 </select>
                                 <div class="dropDownSelect2"></div>
                             </div>
-                           
-                        </div>
+                        </div> -->
                         <div class="top-campaign">
                             <div class="table-responsive table-responsive-data2">
                                 <table class="table table-data2" id="datatables">
@@ -41,41 +45,10 @@
                                         </tr>
                                     </thead>
                                     <tbody id="list_household">
-                                        <!-- <tr>
-                                            <td>
-                                                <div class="table-data__info">
-                                                    <h6>lori lynch</h6>
-                                                    <span>
-                                                        <a href="#">johndoe@gmail.com</a>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="role admin">admin</span>
-                                            </td>
-                                            <td>
-                                                <div class="rs-select2--trans rs-select2--sm">
-                                                    <select class="js-select2" name="property">
-                                                        <option selected="selected">Full Control</option>
-                                                        <option value="">Post</option>
-                                                        <option value="">Watch</option>
-                                                    </select>
-                                                    <div class="dropDownSelect2"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="more">
-                                                    <i class="zmdi zmdi-more"></i>
-                                                </span>
-                                            </td>
-                                        </tr> -->
+                                        
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        
-                        <div class="user-data__footer">
-                            <button class="au-btn au-btn-load">load more</button>
                         </div>
                     </div>
                     <!-- END USER DATA-->
@@ -217,6 +190,53 @@
     </div>
 </div>
 <!-- end modal -->
+<!-- edit modal -->
+<div class="modal fade" id="edit_household" tabindex="1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="largeModalLabel">Edit Household</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Household</strong>
+                            <small> Form</small>
+                        </div>
+                        <form  method="post" class="form-horizontal" name="household_edit_form" >
+                            <div class="card-body card-block">
+                                <div class="form-group">
+                                    <label for="purok" class=" form-control-label">Purok</label>
+                                    <select name="purok_edit" id="purok_edit" class="form-control" disabled="disabled">
+                                        <option value="0">Please select</option>
+                                        <?php foreach ($puroks as $purok) {?>
+                                            <option value="<?=$purok['id']?>"><?=$purok['purok']?></option>
+                                        <?php } ?>
+                                    </select>
+                                    
+                                </div>
+                                 <div class="form-group">
+                                    <label for="street" class=" form-control-label">Household No.</label>
+                                    <input type="number" name="household_edit" id="household_edit" placeholder="Enter Household Number" class="form-control">
+                                    <input type="hidden" name="edit_household_id" id="edit_household_id"  class="form-control">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="edit_save">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end edit modal -->
 <script type="text/javascript">
     // list_household();
     
@@ -346,6 +366,138 @@
                             }
                         });
                     }
+                }
+            });
+        });
+        $('#list_household').on('click', '.item_edit',function(){
+            var id = $(this).data('id');
+            var purok = $(this).data('purok_id');
+            var householdNum = $(this).data('asd');
+
+            $('#edit_household').modal('show');
+
+            $('[name="purok_edit"]').val(purok);
+            $('[name="edit_household_id"]').val(id);
+            $('[name="household_edit"]').val(householdNum);
+
+        });
+        $('#edit_save').click(function(){
+            var id = $('#edit_household_id').val();
+            var purok = parseInt($('#purok_edit').val());
+            var householdNum = $('#household_edit').val();
+
+            filter_household(purok,householdNum).done(function(data){
+                if (data.status) {
+                    swal({
+                        title: 'Submission Failed',
+                        text: 'Household already Exist!', 
+                        type: 'warning',
+                    });
+                }
+                else{
+                    if ( purok == 0 ){
+                         swal({
+                            title: 'Submission Failed',
+                            text: 'Please Select Purok!', 
+                            type: 'warning',
+                        });
+                    }
+                    else if(householdNum =="")
+                    {
+                         swal({
+                            title: 'Submission Failed',
+                            text: 'Household Field is Empty!', 
+                            type: 'warning',
+                        });
+                    }
+                    else{
+                        $.ajax({
+                            url:    '<?=base_url()?>household/update_household',
+                            method: 'POST',
+                            data: {
+                                id:id,
+                                purok:purok,
+                                householdNum:householdNum
+                            },
+                            dataType : 'json',
+                            success:function(response){
+                                if (response.status) {
+                                    swal({
+                                        title: 'Success',
+                                        text: 'Purok Added Successfully!', 
+                                        type: 'success',
+                                        timer: 1000,
+                                        showConfirmButton: false,
+                                    });
+
+                                    $('form[name="household_edit_form"]')[0].reset();
+                                    $('#edit_household').modal('hide');
+                                    table.ajax.reload();                        
+                                }
+                            },
+                            error:function(e){
+                                alert(e);
+                            }
+                        });
+                    }   
+                }
+            });
+        });
+        $("#list_household").on('click', '.item_delete', function(){
+            var id = $(this).data('id');
+            var purok_id = $(this).data('purok_id');
+            var householdNum = $(this).data('asd');
+
+            console.log("household id: "+id);
+            console.log("purok id: "+purok_id);
+            console.log("household Num: "+householdNum);
+            
+            
+            Swal.fire({
+                title: 'Are you sure you want to delete this Household??',
+                text: 'this will delete all Residents under this Household too!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.value) {
+                $.ajax({
+                    type : "POST",
+                    url  : "<?= base_url('household/delete_household')?>",
+                    dataType : "JSON",
+                    data : {
+                        id:id,
+                        purok_id:purok_id,
+                        householdNum:householdNum,
+                    },
+                    success: function(data){
+                        if(data.status){
+                            swal({
+                            title: 'Success',
+                            text: 'Household Deleted Successfully', 
+                            type: 'success',
+                            timer: 1000,
+                            showConfirmButton: false,
+                            });
+
+                            table.ajax.reload();
+                        }
+                    },
+                    error:function(e){
+                        alert(e);
+                    }
+                });
+                return false;
+                
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                    title: 'Cancelled',
+                    text: '', 
+                    type: 'error',
+                    timer: 800,
+                    showConfirmButton: false,
+                });
                 }
             });
         });

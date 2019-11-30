@@ -9,6 +9,7 @@ class Household extends CI_Controller
         $this->load->model('user_model');
         $this->load->model('zone_model');
         $this->load->model('household_model');
+        $this->load->model('resident_model');
     }
     public function index()
     {
@@ -31,7 +32,7 @@ class Household extends CI_Controller
     {
         $id    = $this->input->post('purok');
         $household = $this->input->post('household');
-        $total = $this->zone_model->get_totalHousehold($id);
+        // $total = $this->zone_model->get_totalHousehold($id);
         $data = array(
             'purok_id'    =>$id,
             'householdNum'  => $household
@@ -66,5 +67,37 @@ class Household extends CI_Controller
         $data = $this->household_model->fetch_household($postData);
 
         echo json_encode($data);
+    }
+    public function update_household()
+    {
+        $id = $this->input->post('id');
+
+        $data = array(
+            'purok_id'         => $this->input->post('purok'),
+            'householdNum'  => $this->input->post('householdNum')
+        ); 
+        $result = $this->household_model->update_household($data, $id);
+
+        if ($result) {
+			echo json_encode(array('status'=>true));
+		}
+		else{
+			echo json_encode(array('status'=>false));
+		}
+    }
+    public function delete_household()
+    {
+        $data = $this->input->post('id');
+        
+        $result = $this->household_model->drop_household($data);
+        $this->resident_model->drop_resident_by_household($this->input->post('householdNum'),$this->input->post('purok_id'));
+        $this->zone_model->totalhousehold_decrease($this->input->post('purok_id'));
+
+        if ($result) {
+			echo json_encode(array('status'=>true));
+		}
+		else{
+			echo json_encode(array('status'=>false));
+		}
     }
 }

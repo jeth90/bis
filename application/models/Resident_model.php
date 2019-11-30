@@ -18,4 +18,10 @@ class Resident_model extends CI_Model
         // return $query->result_array();
         return $this->db->query($sql);
     }
+    public function drop_resident_by_household($household, $purokID)
+    {
+        $cond = array('householdID'=> $household, 'purokID'=>$purokID);
+        $this->db->where($cond);
+        $this->db->delete('tbl_resident');
+    }
 }
