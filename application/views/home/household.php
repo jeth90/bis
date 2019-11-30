@@ -253,6 +253,22 @@
             }
         });
     }
+    function filter_household(purok,household){
+        return  $.ajax({
+            type: 'ajax',            
+            url : '<?= base_url()?>household/search_household/',
+            method: 'POST',
+            data: {purok:purok, household:household},
+            async: true,
+            dataType: 'json',
+            success: function(data){
+                console.log(data.status);
+            },
+            error:function(e){
+                alert(e);
+            }
+        });
+    }
     $(document).ready(function(){
         var table = $('#datatables').DataTable({
             'pageLength' : 10,
@@ -278,42 +294,60 @@
             var purok           = $('#purok').val();
             var household    = $('#household').val();
 
-            if ( purok == 0 ){
-                alert("Please Select Purok.");
-            }
-            else if(household =="")
-            {
-                alert("Please Input Household Number!");
-            }
-            else{
-                $.ajax({
-                    url:    '<?=base_url()?>household/add_household',
-                    method: 'POST',
-                    data: {
-                        purok:purok,
-                        household:household
-                    },
-                    dataType : 'json',
-                    success:function(response){
-                        if (response.status) {
-                            swal({
-                                title: 'Success',
-                                text: 'Purok Added Successfully!', 
-                                type: 'success',
-                                timer: 1000,
-                                showConfirmButton: false,
-                            });
-
-                            $('form[name="household_form"]')[0].reset();
-                            $('#add_household').modal('hide');
-                            table.ajax.reload();                        
-                        }
-                    },
-                    error:function(e){
-                        alert(e);
+            filter_household(purok,household).done(function(data){
+                if (data.status) {
+                    swal({
+                        title: 'Submission Failed',
+                        text: 'Household already Exist!', 
+                        type: 'warning',
+                    });
+                }else{
+                    if ( purok == 0 ){
+                         swal({
+                            title: 'Submission Failed',
+                            text: 'Please Select Purok!', 
+                            type: 'warning',
+                        });
                     }
-                });
-            }
+                    else if(household =="")
+                    {
+                         swal({
+                            title: 'Submission Failed',
+                            text: 'Household Field is Empty!', 
+                            type: 'warning',
+                        });
+                    }
+                    else{
+                        $.ajax({
+                            url:    '<?=base_url()?>household/add_household',
+                            method: 'POST',
+                            data: {
+                                purok:purok,
+                                household:household
+                            },
+                            dataType : 'json',
+                            success:function(response){
+                                if (response.status) {
+                                    swal({
+                                        title: 'Success',
+                                        text: 'Purok Added Successfully!', 
+                                        type: 'success',
+                                        timer: 1000,
+                                        showConfirmButton: false,
+                                    });
+
+                                    $('form[name="household_form"]')[0].reset();
+                                    $('#add_household').modal('hide');
+                                    table.ajax.reload();                        
+                                }
+                            },
+                            error:function(e){
+                                alert(e);
+                            }
+                        });
+                    }
+                }
+            });
         });
     });
 </script>

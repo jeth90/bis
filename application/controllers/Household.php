@@ -46,6 +46,17 @@ class Household extends CI_Controller
             echo json_encode(array('status'=>false));
         }
     }
+    public function search_household()
+    {
+        $purok = $this->input->post('purok');
+        $household = $this->input->post('household');
+        $result = $this->household_model->search_household($purok,$household);
+        if ($result) {
+            echo json_encode(array('status'=>true));
+        }else {
+            echo json_encode(array('status'=>false));
+        }
+    }
     public function show()
     {
         // POST data

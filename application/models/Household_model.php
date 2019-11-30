@@ -102,5 +102,42 @@ class Household_model extends CI_Model
 
         // var_dump(json_encode($response));
         return $response; 
-   }
+    }
+    public function search_household($purok_id,$household)
+    {   
+        // $this->db->where('id',$purok_id);
+        // $purok = $this->db->get('tbl_purok');
+        
+        // var_dump($purok['purok']);
+
+        // $sql = "SELECT 
+        //     a.id,
+        //     a.householdNum,
+        //     a.purok_id,
+        //     a.totalhouseholdmember,
+        //     b.id,
+        //     b.purok FROM tbl_household a 
+        //     INNER JOIN tbl_purok b ON a.purok_id = b.id
+        //     WHERE a.householdNum=$household AND b.id=$purok_id";
+
+        //     $query = $this->db->query($sql);
+        
+        // return $query->result_array();
+
+        $cond = array('tbl_purok.id'=> $purok_id, 'householdNum'=>$household);
+        $this->db->where($cond);
+        $this->db->from('tbl_household');
+        $this->db->join('tbl_purok','tbl_purok.id=tbl_household.purok_id','inner');
+        $query = $this->db->get();
+
+        // echo("<pre>");
+        // var_dump($query);
+        if ($query->num_rows() > 0) {
+            return true;
+        }
+        else{
+            return false;
+        }
+       
+    }
 }
