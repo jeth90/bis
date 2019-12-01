@@ -1,12 +1,12 @@
     </div>
         </div>
-        
-        <!-- datatimepicker JS -->
-        <script src="<?=base_url()?>assets/moment/min/moment.min.js"></script>
-        <script src="<?=base_url()?>assets/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
         <!-- Bootstrap JS-->
         <script src="<?=base_url()?>assets/bootstrap-4.1/popper.min.js"></script>
         <script src="<?=base_url()?>assets/bootstrap-4.1/bootstrap.min.js"></script>
+        <!-- datatimepicker JS -->
+        <!-- <script src="<?=base_url()?>assets/moment/min/moment.min.js"></script>
+        <script src="<?=base_url()?>assets/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script> -->
+        
         <!-- Vendor JS       -->
         <script src="<?=base_url()?>assets/slick/slick.min.js">
         </script>

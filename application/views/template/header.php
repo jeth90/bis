@@ -42,7 +42,12 @@
     <!-- <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'> -->
     
     <!-- Jquery JS-->
-    <script src="<?=base_url()?>assets/jquery-3.2.1.min.js"></script>
+    <!-- <script src="<?=base_url()?>assets/jquery-3.2.1.min.js"></script> -->
+    <script type="text/javascript" src="<?=base_url()?>/assets/jquery/jquery.3.4.1.js"></script>
+    <script src="<?=base_url()?>assets/moment2/min/moment.min.js"></script>
+    <script type="text/javascript" src="<?=base_url()?>assets/tempusdominos/build/js/tempusdominus-bootstrap-4.min.js"></script>
+    <link rel="stylesheet" href="<?=base_url()?>assets/tempusdominos/build/css/tempusdominus-bootstrap-4.min.css" />
+
     <!-- datatables -->
     <script src="<?=base_url()?>assets/datatables/datatables.min.js"></script>
     <!-- <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->

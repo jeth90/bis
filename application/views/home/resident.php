@@ -174,12 +174,12 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="postal-code" class=" form-control-label">Birth Date</label>
-                                            <div class='input-group date' id='birthdate'>
-                                                <input type='text' class="form-control" />
-                                                <span class="input-group-addon">
-                                                <i class="zmdi zmdi-calendar"></i>
-                                                </span>
-                                            </div>
+                                            <div class='input-group date' id='birthdate' data-target-input="nearest">
+                                                <input type='text' class="form-control datetimepicker-input" data-target="#birthdate"/>
+                                                <div class="input-group-append" data-target="#birthdate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
@@ -256,9 +256,7 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
-        $('#birthdate').datetimepicker({
-            format: 'DD.MM.YYYY'
-        });
+        $('#birthdate').datetimepicker();
         var datatable = $('#datatable').DataTable({
             "pageLength" : 5,
             "ajax":{
