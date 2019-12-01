@@ -66,12 +66,12 @@ class Resident extends CI_Controller
         foreach($residents->result() as $r) {
 
             $data[] = array(
-                $r->firstName,
+                $r->firstName." ".$r->middleName." ".$r->lastName." ".$r->qualifier,
                 $r->purok,
                 $r->birthdate,
                 $r->gender ,
                 $r->job,
-                '<span class="more edit_purok" data-id="'.$r->id.'" data-name="'.$r->firstName.'"><i class="zmdi zmdi-edit"></i></span>&nbsp;&nbsp;<span class="more item_delete" data-id="'.$r->id.'"><i class="zmdi zmdi-delete"></i></span>',
+                '<div class="table-data-feature"><button class="item view_resident" data-id="'.$r->id.'"><i class="zmdi zmdi-eye" data-toggle="tooltip" title="View"></i></button>&nbsp;&nbsp;<button class="item edit_resident" data-id="'.$r->id.'" data-name="'.$r->firstName.'"><i class="zmdi zmdi-edit" data-toggle="tooltip" title="Edit"></i></button>&nbsp;&nbsp;<button class="item delete_resident" data-id="'.$r->id.'"><i class="zmdi zmdi-delete" data-toggle="tooltip" title="Delete"></i></button></div>',
             );
         }
         $output = array(
@@ -86,5 +86,18 @@ class Resident extends CI_Controller
     function fetch()
 	{
 	  echo $this->resident_model->fetch_data($this->uri->segment(3));
-	}
+    }
+    public function delete_resident()
+    {
+        $data = $this->input->post('id');
+        
+        $result = $this->resident_model->delete_resident($data);
+
+        if ($result) {
+			echo json_encode(array('status'=>true));
+		}
+		else{
+			echo json_encode(array('status'=>false));
+		}
+    }
 }

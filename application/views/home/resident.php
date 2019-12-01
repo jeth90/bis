@@ -256,9 +256,13 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
-        $('#birthdate').datetimepicker();
+        $('#birthdate').datetimepicker({
+            maxDate: new Date,
+            // minDate: new Date(),
+            format: 'L',
+        });
         var datatable = $('#datatable').DataTable({
-            "pageLength" : 5,
+            "pageLength" : 10,
             "ajax":{
                 url : "<?= site_url("resident/list_resident") ?>",
                 type: 'GET'
@@ -308,8 +312,8 @@
 
             console.log("purok id: "+purok);
             console.log("household: "+householdNo);
-            
-            
+            console.log("birthday: "+birthdate);
+                        
 
             validate_household(purok,householdNo).done(function(data){
                 if (data.status) {
@@ -376,6 +380,52 @@
                 }
             });
         });
+        $("#list_resident").on('click','.delete_resident',function(){
+            var id = $(this).data('id');
+            Swal.fire({
+                title: 'Are you sure you want to delete this Resident??',
+                text: 'this will delete Permanently!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.value) {
+                $.ajax({
+                    type : "POST",
+                    url  : "<?= base_url('resident/delete_resident')?>",
+                    dataType : "JSON",
+                    data : {id:id},
+                    success: function(data){
+                        if(data.status){
+                            swal({
+                            title: 'Success',
+                            text: 'Resident Deleted Successfully', 
+                            type: 'success',
+                            timer: 1000,
+                            showConfirmButton: false,
+                            });
+
+                            datatable.ajax.reload();
+                        }
+                    },
+                    error:function(e){
+                        alert(e);
+                    }
+                });
+                return false;
+                
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                    title: 'Cancelled',
+                    text: '', 
+                    type: 'error',
+                    timer: 800,
+                    showConfirmButton: false,
+                });
+                }
+            });
+        })
     });
 
     //list_resident();

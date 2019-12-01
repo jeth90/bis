@@ -10,6 +10,7 @@ class Resident_model extends CI_Model
     {
         $sql = "SELECT 
             a.*,
+            b.id as purokID,
             b.purok FROM tbl_resident a 
             INNER JOIN tbl_purok b ON a.purokID = b.id
             ORDER BY a.householdID ASC";
@@ -41,10 +42,16 @@ class Resident_model extends CI_Model
         }
         else{
             $output[] = array(
-                    'name'  => 'NO HOUSEHOLD FOUND'
+                'name'  => 'NO HOUSEHOLD FOUND'
         );
         echo json_encode($output);
         }
-        
+    }
+    public function delete_resident($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('tbl_resident');
+
+        return 1;
     }
 }
