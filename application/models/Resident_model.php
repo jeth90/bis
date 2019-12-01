@@ -54,4 +54,29 @@ class Resident_model extends CI_Model
 
         return 1;
     }
+    public function select_resident($id)
+    {
+        // $this->db->where('id',$id);
+        // $query = $this->db->get('tbl_resident');
+        // return $query->result_array();
+
+        $sql = "SELECT 
+            a.*,
+            b.id as purokID,
+            b.purok FROM tbl_resident a 
+            INNER JOIN tbl_purok b ON a.purokID = b.id";
+
+        $query = $this->db->query($sql);
+        return $query->result_array();
+        // return $this->db->query($sql);
+    
+    }
+    public function update_resident($data, $id)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('tbl_resident', $data);
+
+        return true;
+    }
+   
 }

@@ -22,7 +22,7 @@
                                             </div>
                                             <div class="text">
                                                 <h2>10368</h2>
-                                                <span>members online</span>
+                                                <span>Total Residents</span>
                                             </div>
                                         </div>
                                         <div class="overview-chart">
@@ -36,11 +36,11 @@
                                     <div class="overview__inner">
                                         <div class="overview-box clearfix">
                                             <div class="icon">
-                                                <i class="zmdi zmdi-shopping-cart"></i>
+                                                <i class="zmdi zmdi-home"></i>
                                             </div>
                                             <div class="text">
                                                 <h2>388,688</h2>
-                                                <span>items solid</span>
+                                                <span>Total Household</span>
                                             </div>
                                         </div>
                                         <div class="overview-chart">
@@ -57,8 +57,8 @@
                                                 <i class="zmdi zmdi-calendar-note"></i>
                                             </div>
                                             <div class="text">
-                                                <h2>1,086</h2>
-                                                <span>this week</span>
+                                                <h2>20</h2>
+                                                <span>Total Purok</span>
                                             </div>
                                         </div>
                                         <div class="overview-chart">
@@ -72,11 +72,11 @@
                                     <div class="overview__inner">
                                         <div class="overview-box clearfix">
                                             <div class="icon">
-                                                <i class="zmdi zmdi-money"></i>
+                                                <i class="zmdi zmdi-balance"></i>
                                             </div>
                                             <div class="text">
-                                                <h2>$1,060,386</h2>
-                                                <span>total earnings</span>
+                                                <h2>1,060,386</h2>
+                                                <span>Total Deseased</span>
                                             </div>
                                         </div>
                                         <div class="overview-chart">
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                        
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-lg-9">
                                 <h2 class="title-1 m-b-25">Earnings By Items</h2>
                                 <div class="table-responsive table--no-card m-b-40">
@@ -224,7 +224,7 @@
                                     <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

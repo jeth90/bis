@@ -17,7 +17,7 @@ class Resident extends CI_Controller
         $data['users']  = $this->user_model->get_users();
         $data['user']   = $this->auth->get_users();
         $data['puroks'] = $this->zone_model->get_purok();
-
+        
         $this->load->view('template/header', $data);
         $this->load->view('home/resident', $data);
         $this->load->view('template/footer');
@@ -25,7 +25,7 @@ class Resident extends CI_Controller
     public function add_resident()
     {
         $id    = $this->input->post('purok');
-        $householdNo = 
+        // $householdNo = 
         $data = array(
             'householdID'   => $this->input->post('householdNo'),
             'purokID'       => $this->input->post('purok'),
@@ -71,7 +71,9 @@ class Resident extends CI_Controller
                 $r->birthdate,
                 $r->gender ,
                 $r->job,
-                '<div class="table-data-feature"><button class="item view_resident" data-id="'.$r->id.'"><i class="zmdi zmdi-eye" data-toggle="tooltip" title="View"></i></button>&nbsp;&nbsp;<button class="item edit_resident" data-id="'.$r->id.'" data-name="'.$r->firstName.'"><i class="zmdi zmdi-edit" data-toggle="tooltip" title="Edit"></i></button>&nbsp;&nbsp;<button class="item delete_resident" data-id="'.$r->id.'"><i class="zmdi zmdi-delete" data-toggle="tooltip" title="Delete"></i></button></div>',
+                '<div class="table-data-feature"><button class="item view_resident" data-id="'.$r->id.'"><i class="zmdi zmdi-eye" data-toggle="tooltip" title="View"></i></button>&nbsp;&nbsp;'.
+                '<button class="item edit_resident" data-id="'.$r->id.'" data-name="'.$r->firstName.'"><i class="zmdi zmdi-edit" data-toggle="tooltip" title="Edit"></i></button>&nbsp;&nbsp;'.
+                '<button class="item delete_resident" data-id="'.$r->id.'"><i class="zmdi zmdi-delete" data-toggle="tooltip" title="Delete"></i></button></div>',
             );
         }
         $output = array(
@@ -99,5 +101,42 @@ class Resident extends CI_Controller
 		else{
 			echo json_encode(array('status'=>false));
 		}
+    }
+   public function select_resident($id)
+   {
+
+       $result = $this->resident_model->select_resident($id);
+       echo json_encode($result);
+   }
+   public function update_resident()
+    {
+        $id    = $this->input->post('id');
+        // $householdNo = 
+        $data = array(
+            'householdID'   => $this->input->post('householdNo'),
+            'purokID'       => $this->input->post('purok'),
+            'firstName'     => $this->input->post('firstName'),
+            'middleName'    => $this->input->post('middleName'),
+            'lastName'      => $this->input->post('lastName'),
+            'qualifier'     => $this->input->post('qualifier'),
+            'addressNumber' => $this->input->post('addressNumber'),
+            // 'addressStreet' => $this->input->post('street'),
+            'addressSubd'   => $this->input->post('addressSubd'),
+            'birthPlace'    => $this->input->post('birthPlace'),
+            'birthdate'     => $this->input->post('birthdate'),
+            'remarks'       => $this->input->post('remarks'),
+            'gender'        => $this->input->post('gender'),
+            'civilStatus'   => $this->input->post('status'),
+            'citizenship'   => $this->input->post('citizen'),
+            'job'           => $this->input->post('job'),
+        );
+        // var_dump($data);exit;
+        $result = $this->resident_model->update_resident($data,$id);
+
+        if ($result) {
+            echo json_encode(array('status'=>true));
+        }else {
+            echo json_encode(array('status'=>false));
+        }
     }
 }
