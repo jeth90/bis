@@ -176,7 +176,7 @@
         var datatable = $('#datatable').DataTable({
             
             'processing': true,
-            // 'paging': false,
+            'paging': false,
             "serverSide" : true,
             'serverMethod': 'post',
             "ajax": {

@@ -522,6 +522,7 @@
         
         var datatable = $('#datatable').DataTable({
             "pageLength" : 10,
+            "paging" :false,
             "ajax":{
                 url : "<?= site_url("resident/list_resident") ?>",
                 type: 'GET'

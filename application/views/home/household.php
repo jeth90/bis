@@ -292,6 +292,7 @@
     $(document).ready(function(){
         var table = $('#datatables').DataTable({
             'pageLength' : 10,
+            "paging" :false,
             'processing': true,
             'order' :[],
             'serverSide': true,
