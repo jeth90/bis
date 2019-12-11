@@ -118,7 +118,7 @@ class Zone extends CI_Controller
         exit();
 
     }*/
-    public function edit_zone(Type $var = null)
+    public function edit_zone()
     {
         $id = $this->input->post('id');
 

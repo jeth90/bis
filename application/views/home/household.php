@@ -35,7 +35,7 @@
                         </div> -->
                         <div class="top-campaign">
                             <div class="table-responsive table-responsive-data2">
-                                <table class="table table-data2" id="datatables">
+                                <table class="table table-top-campaign display dataTable" id="datatables">
                                     <thead>
                                         <tr>
                                             <th>Household Number</th>
@@ -292,7 +292,7 @@
     $(document).ready(function(){
         var table = $('#datatables').DataTable({
             'pageLength' : 10,
-            "paging" :false,
+            // "paging" :false,
             'processing': true,
             'order' :[],
             'serverSide': true,

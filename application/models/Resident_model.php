@@ -13,6 +13,7 @@ class Resident_model extends CI_Model
             b.id as purokID,
             b.purok FROM tbl_resident a 
             INNER JOIN tbl_purok b ON a.purokID = b.id
+            WHERE a.remarks != 'deceased'
             ORDER BY a.householdID ASC";
 
         // $query = $this->db->query($sql);
@@ -64,7 +65,7 @@ class Resident_model extends CI_Model
             a.*,
             b.id as purokID,
             b.purok FROM tbl_resident a 
-            INNER JOIN tbl_purok b ON a.purokID = b.id";
+            INNER JOIN tbl_purok b ON a.purokID = b.id WHERE a.id=$id";
 
         $query = $this->db->query($sql);
         return $query->result_array();

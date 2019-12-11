@@ -21,7 +21,7 @@
                                                 <i class="zmdi zmdi-account-o"></i>
                                             </div>
                                             <div class="text">
-                                                <h2>10368</h2>
+                                                <h2><?= $total_resident ?></h2>
                                                 <span>Total Residents</span>
                                             </div>
                                         </div>
@@ -39,7 +39,7 @@
                                                 <i class="zmdi zmdi-home"></i>
                                             </div>
                                             <div class="text">
-                                                <h2>388,688</h2>
+                                                <h2><?= $total_household ?></h2>
                                                 <span>Total Household</span>
                                             </div>
                                         </div>
@@ -57,7 +57,7 @@
                                                 <i class="zmdi zmdi-calendar-note"></i>
                                             </div>
                                             <div class="text">
-                                                <h2>20</h2>
+                                                <h2><?= $total_purok ?></h2>
                                                 <span>Total Purok</span>
                                             </div>
                                         </div>
@@ -75,7 +75,7 @@
                                                 <i class="zmdi zmdi-balance"></i>
                                             </div>
                                             <div class="text">
-                                                <h2>1,060,386</h2>
+                                                <h2><?= $total_deceased; ?></h2>
                                                 <span>Total Deseased</span>
                                             </div>
                                         </div>

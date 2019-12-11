@@ -106,6 +106,7 @@ class Resident extends CI_Controller
    {
 
        $result = $this->resident_model->select_resident($id);
+    //    var_dump($result);exit;
        echo json_encode($result);
    }
    public function update_resident()
@@ -129,6 +130,7 @@ class Resident extends CI_Controller
             'civilStatus'   => $this->input->post('status'),
             'citizenship'   => $this->input->post('citizen'),
             'job'           => $this->input->post('job'),
+            'died_on'       => $this->input->post('died_on'),
         );
         // var_dump($data);exit;
         $result = $this->resident_model->update_resident($data,$id);

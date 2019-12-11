@@ -21,10 +21,10 @@
                             <table class="table table-top-campaign display dataTable" id="datatable">
                                 <thead>
                                     <tr>
-                                        <td>Purok</td>
-                                        <td>Purok Leader</td>
-                                        <td>Total Household</td>
-                                        <td></td>    
+                                        <th>Purok</th>
+                                        <th>Purok Leader</th>
+                                        <th>Total Household</th>
+                                        <th></th>    
                                     </tr>
                                 </thead>
                                 <tbody id="list_purok">
@@ -176,14 +176,13 @@
         var datatable = $('#datatable').DataTable({
             
             'processing': true,
-            'paging': false,
             "serverSide" : true,
             'serverMethod': 'post',
             "ajax": {
                 url : "<?= site_url("zone/purok_list")?>",          
             },
             "order"      : [
-                [2,"asc"]
+                [0,"asc"]
             ],
             "columns"    : [
                 null,
@@ -266,6 +265,8 @@
             var id = $('#edit_purok_id').val();
             var purok = $('#edit_purok').val();
             var purok_leader = $('#edit_purok_leader').val();
+            console.log(id);
+            
 
             // filter_purok(purok).done(function(data){
             //     if (data.status) {

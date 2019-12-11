@@ -3,20 +3,17 @@
         <!-- Bootstrap JS-->
         <script src="<?=base_url()?>assets/bootstrap-4.1/popper.min.js"></script>
         <script src="<?=base_url()?>assets/bootstrap-4.1/bootstrap.min.js"></script>
-        <!-- datatimepicker JS -->
-        <!-- <script src="<?=base_url()?>assets/moment/min/moment.min.js"></script>
-        <script src="<?=base_url()?>assets/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script> -->
-        
+   
         <!-- Vendor JS       -->
         <script src="<?=base_url()?>assets/slick/slick.min.js">
         </script>
         <script src="<?=base_url()?>assets/wow/wow.min.js"></script>
         <script src="<?=base_url()?>assets/animsition/animsition.min.js"></script>
-        <script src="<?=base_url()?>assets/bootstrap-progressbar/bootstrap-progressbar.min.js">
+        <script src="<?=base_url()?>assets/bootstrap-progressbar/bootstrap-progressbar.min.js"> 
         </script>
-        <!-- <script src="<?=base_url()?>assets/counter-up/jquery.waypoints.min.js"></script>
+        <script src="<?=base_url()?>assets/counter-up/jquery.waypoints.min.js"></script>
         <script src="<?=base_url()?>assets/counter-up/jquery.counterup.min.js"> -->
-        </script>
+        <!-- </script>
         <script src="<?=base_url()?>assets/circle-progress/circle-progress.min.js"></script>
         <script src="<?=base_url()?>assets/perfect-scrollbar/perfect-scrollbar.js"></script>
         <script src="<?=base_url()?>assets/chartjs/Chart.bundle.min.js"></script>

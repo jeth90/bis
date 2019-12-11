@@ -5,9 +5,6 @@
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="au theme template">
-    <meta name="author" content="Hau Nguyen">
-    <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
     <title>Dashboard</title>
@@ -18,13 +15,13 @@
     <link href="<?=base_url()?>assets/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
     <link href="<?=base_url()?>assets/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
 
-    <!-- Bootstrap CSS-->
+    <!-- Bootstrap CSS -->
     <link href="<?=base_url()?>assets/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
     
 
     <!-- Vendor CSS-->
     <link href="<?=base_url()?>assets/animsition/animsition.min.css" rel="stylesheet" media="all">
-    <link href="<?=base_url()?>assets/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="<?=base_url()?>assets/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all"> -->
     <link href="<?=base_url()?>assets/wow/animate.css" rel="stylesheet" media="all">
     <link href="<?=base_url()?>assets/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
     <link href="<?=base_url()?>assets/slick/slick.css" rel="stylesheet" media="all">
@@ -39,18 +36,15 @@
     
     <!-- datatables -->
     <link href="<?=base_url()?>assets/datatables/datatables.min.css" rel="stylesheet" media="all">
-    <!-- <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'> -->
     
     <!-- Jquery JS-->
-    <!-- <script src="<?=base_url()?>assets/jquery-3.2.1.min.js"></script> -->
     <script type="text/javascript" src="<?=base_url()?>/assets/jquery/jquery.3.4.1.js"></script>
+     <!-- datatables -->
+    <script src="<?=base_url()?>assets/datatables/datatables.min.js"></script>
     <script src="<?=base_url()?>assets/moment2/min/moment.min.js"></script>
-    <script type="text/javascript" src="<?=base_url()?>assets/tempusdominos/build/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script type="text/javascript" src="<?=base_url()?>assets/tempusdominos/build/js/tempusdominus-bootstrap-4.min.js"></script> 
     <link rel="stylesheet" href="<?=base_url()?>assets/tempusdominos/build/css/tempusdominus-bootstrap-4.min.css" />
 
-    <!-- datatables -->
-    <script src="<?=base_url()?>assets/datatables/datatables.min.js"></script>
-    <!-- <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
 
     <link rel="stylesheet" type="text/css" href="<?= base_url()?>assets/sweetalert2/sweetalert2.css">
     <script src="<?= base_url()?>assets/sweetalert2/sweetalert2.js"></script>
@@ -188,14 +182,14 @@
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <img src="<?=base_url()?>assets/images/icon/logo.png" alt="Barangay IS" />
+                    <img src="<?=base_url()?>image/dash-logo.png" alt="Barangay IS" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="has-sub <?= $active == 'home' ? 'active' : '' ?>">
-                            <a class="js-arrow" href="<?=base_url()?>home/">
+                        <li class="<?= $active == 'home' ? 'active' : '' ?>">
+                            <a href="<?=base_url()?>home/">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                             <!-- <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
@@ -225,8 +219,8 @@
                             <a href="<?=base_url()?>resident">
                                 <i class="far fa-check-square"></i>Residents</a>
                         </li>
-                        <li>
-                            <a href="#">
+                        <li class="<?= $active == 'deceased' ? 'active' : '' ?>">
+                            <a href="<?=base_url()?>deceased">
                                 <i class="fas fa-calendar-alt"></i>Deseased</a>
                         </li>
                         <li>
@@ -283,21 +277,13 @@
                                                     <h5 class="name">
                                                         <a href="#"><?= $user['username'] ?></a>
                                                     </h5>
-                                                    <span class="email">johndoe@example.com</span>
+                                                    <!-- <span class="email">johndoe@example.com</span> -->
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
                                                     <a href="#">
                                                         <i class="zmdi zmdi-account"></i>Account</a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-settings"></i>Setting</a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-money-box"></i>Billing</a>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
